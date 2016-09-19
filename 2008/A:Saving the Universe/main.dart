@@ -1,23 +1,56 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
+import 'dart:math';
 
 main() async{
-  String content = await readFile("input.txt");
+  String content = await readFile("A-small-practice.in");
   List<String> lineList = parseByLine(content);
-  parse(lineList);
-  //print(lineList);
+  var cases = parse(lineList);
+
+  writeFile("Output.txt",solve(cases));
+
+
+
 }
 
+String solve(cases){
+
+  int index = 1;
+  String output =""; 
+  for(var testCase in cases){
+    List<String> engines = testCase[0];
+    List<String> queries = testCase[1];
+
+    List<int> hits = new List<int>();
+
+    for(String engine in engines){
+      int hit = 0;
+      for(String query in queries){
+        if(engine == query){
+          hit++;
+        }
+      }
+      hits.add(hit);
+    }
+
+    output += 'Case #${index.toString()}: ${hits.reduce(min).toString()}\n';
+    index++;
+  }
+
+  return output;
+}
 
 Future readFile(String fileName) async{
-  File file = new File("input.txt");
+  File file = new File(fileName);
   return await(file.readAsString(encoding: ASCII));
 }
+
 
 List<String> parseByLine(String line){
   return line.trim().split('\n');
 }
+
 
 void writeFile(String name, String content){
   var writeFile = new File(name).openWrite();
@@ -25,16 +58,16 @@ void writeFile(String name, String content){
   writeFile.close();
 }
 
-void parse(List<String> file){
+
+parse(List<String> file){
 
   int cases = int.parse(file[0]);
   print(file[1]);
   int index = 1;
-  List<List<String>> allEngines = new List<List<String>>();
-  List<List<String>> allQueries = new List<List<String>>();
+  var Cases = [];
+
 
   for(int x = 1; x <= cases; x++){
-
     List<String> engines = new List<String>();
     List<String> queries = new List<String>();
     int curr;
@@ -54,10 +87,10 @@ void parse(List<String> file){
     } 
     index+=1;
 
-    allEngines.add(engines);
-    allQueries.add(queries);
+    Cases.add([engines, queries]);
 
   }
 
+  return Cases;
 
 }

@@ -8,6 +8,7 @@
 
 using namespace std;
 
+string solve(vector<Case>);
 vector<string> split(string str, string sep);
 string readFile(string fileName);
 class Case {
@@ -23,11 +24,23 @@ int main() {
   //cout << readFile("Input.txt").split("\n"));
   vector<string> arr = split(readFile("input.txt"), "\n");
   vector<Case> runs = parse(arr);
+  solve(runs);
   /*
   for(int i = 0; i < sizeof(arr); i++){
     cout << "Line: "<< arr[i] << "\n";
   } */
   return 0;
+}
+
+string solve(<vector>Case Cases){
+
+  string answer = "";
+
+  for(in i = 0; i < Cases; i++){
+    
+  }
+
+  return answer;
 }
 
 vector<Case> parse ( vector<string> arr){

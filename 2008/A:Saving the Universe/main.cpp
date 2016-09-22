@@ -10,16 +10,54 @@ using namespace std;
 
 vector<string> split(string str, string sep);
 string readFile(string fileName);
+class Case {
+public:
+  vector<string> engines, queries;
+};
+
+vector<Case> parse(vector<string> arr);
 
 
 
 int main() {
   //cout << readFile("Input.txt").split("\n"));
   vector<string> arr = split(readFile("input.txt"), "\n");
+  vector<Case> runs = parse(arr);
+  /*
   for(int i = 0; i < sizeof(arr); i++){
     cout << "Line: "<< arr[i] << "\n";
-  }
+  } */
   return 0;
+}
+
+vector<Case> parse ( vector<string> arr){
+
+  //int cases = atoi(arr[0].c_str());
+  int cases = 1;
+  int index = 1;
+  int curr, no;
+  vector<Case> run(2);
+
+  for(int c = 0; c < cases; c++){
+
+    //Find Search engines for specific case
+    curr = index;
+    no = atoi(arr[index].c_str()) +1;
+    for(int i = curr+1; i <= no; i++ ){
+      run[c].engines.push_back(arr[i]);
+      index = i;
+    }
+
+    //Find Search queries for specific case
+    curr = index;
+    no = atoi(arr[index].c_str()) +1;
+    for(int i = curr+1; i <= no; i++ ){
+      run[c].queries.push_back(arr[i]);
+      index = i;
+    }
+
+  }
+  return run;
 }
 
 // Read file and return a string

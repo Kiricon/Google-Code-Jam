@@ -86,24 +86,27 @@ vector<Case> parse ( vector<string> arr){
 
   //int cases = atoi(arr[0].c_str());
   int cases = atoi(arr[0].c_str());
-  int index = 1;
+  cout << cases << '\n';
+  int index = 0;
   int curr, no;
   vector<Case> run(2);
 
   for(int c = 0; c < cases; c++){
 
     //Find Search engines for specific case
-    curr = index;
-    no = atoi(arr[index].c_str()) +1;
+    curr = index+1;
+    no = atoi(arr[curr].c_str()) + curr;
+
     for(int i = curr+1; i <= no; i++ ){
       run[c].engines.push_back(arr[i]);
       index = i;
     }
 
     //Find Search queries for specific case
-    curr = index;
-    no = atoi(arr[index].c_str()) +1;
-    for(int i = curr+1; i <= no; i++ ){
+    curr = index+1;
+    no = atoi(arr[curr].c_str()) + curr;
+
+    for(int i = curr; i <= no; i++ ){
       run[c].queries.push_back(arr[i]);
       index = i;
     }

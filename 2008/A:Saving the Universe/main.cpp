@@ -16,9 +16,10 @@ class Case {
 public:
   vector<string> engines, queries;
 };
-void findMatches(vector<Case>);
+
+vector<vector<int> > findMatches(vector<Case>);
 vector<Case> parse(vector<string> arr);
-string solve(vector<Case>);
+string solve(vector<vector<int> > totalMatches, vector<Case> cases);
 
 
 
@@ -27,7 +28,8 @@ int main() {
   vector<string> arr = split(readFile("input.txt"), "\n");
   vector<Case> runs = parse(arr);
   //string output = solve(runs);
-  findMatches(runs);
+  vector<vector <int> > totalMatches = findMatches(runs);
+  solve(totalMatches, runs);
   /*
   for(int i = 0; i < sizeof(arr); i++){
     cout << "Line: "<< arr[i] << "\n";
@@ -36,7 +38,7 @@ int main() {
 }
 
 //Solve the problem and return a string with output
-string solve(vector<Case> Cases){
+string solve(vector<vector<int> > totalMatches, vector<Case> cases){
 
   string answer = "";
 
@@ -45,7 +47,9 @@ string solve(vector<Case> Cases){
   return answer;
 }
 
-void findMatches(vector<Case> Cases){
+vector<vector<int> > findMatches(vector<Case> Cases){
+
+  vector<vector<int> > allMatches;
 
   for(int i = 0; i < Cases.size(); i++){
 
@@ -64,7 +68,7 @@ void findMatches(vector<Case> Cases){
 
     }
 
-
+    allMatches.push_back(matches);
     cout << "Match: "<< i << "[";
 
     for(int m = 0; m < matches.size(); m++){
@@ -77,6 +81,8 @@ void findMatches(vector<Case> Cases){
 
   }
 
+  return allMatches;
+
 }
 
 
@@ -86,7 +92,6 @@ vector<Case> parse ( vector<string> arr){
 
   //int cases = atoi(arr[0].c_str());
   int cases = atoi(arr[0].c_str());
-  cout << cases << '\n';
   int index = 0;
   int curr, no;
   vector<Case> run(2);

@@ -8,15 +8,17 @@
 
 using namespace std;
 
-string solve(vector<Case>);
+
 vector<string> split(string str, string sep);
 string readFile(string fileName);
+
 class Case {
 public:
   vector<string> engines, queries;
 };
-
+void findMatches(vector<Case>);
 vector<Case> parse(vector<string> arr);
+string solve(vector<Case>);
 
 
 
@@ -24,7 +26,8 @@ int main() {
   //cout << readFile("Input.txt").split("\n"));
   vector<string> arr = split(readFile("input.txt"), "\n");
   vector<Case> runs = parse(arr);
-  solve(runs);
+  //string output = solve(runs);
+  findMatches(runs);
   /*
   for(int i = 0; i < sizeof(arr); i++){
     cout << "Line: "<< arr[i] << "\n";
@@ -32,21 +35,57 @@ int main() {
   return 0;
 }
 
-string solve(<vector>Case Cases){
+//Solve the problem and return a string with output
+string solve(vector<Case> Cases){
 
   string answer = "";
 
-  for(in i = 0; i < Cases; i++){
-    
-  }
+
 
   return answer;
 }
 
+void findMatches(vector<Case> Cases){
+
+  for(int i = 0; i < Cases.size(); i++){
+
+    Case set = Cases[i];
+    vector<int> matches;
+
+    for(int e = 0; e < set.engines.size(); e++){
+      int match = 0;
+      for(int q = 0; q < set.queries.size(); q++){
+        if(set.queries[q] == set.engines[e]){
+          match++;
+        }
+      }
+
+      matches.push_back(match);
+
+    }
+
+
+    cout << "Match: "<< i << "[";
+
+    for(int m = 0; m < matches.size(); m++){
+      cout << matches[m] << ", ";
+    }
+
+    cout << "]\n";
+
+
+
+  }
+
+}
+
+
+
+//Parse out the array of string delemited by line in to cases, queries and engines
 vector<Case> parse ( vector<string> arr){
 
   //int cases = atoi(arr[0].c_str());
-  int cases = 1;
+  int cases = atoi(arr[0].c_str());
   int index = 1;
   int curr, no;
   vector<Case> run(2);

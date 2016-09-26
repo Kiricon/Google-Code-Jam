@@ -26,6 +26,8 @@
 		34754F981D96C4DC00F8793E /* A:Save The Universe */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "A:Save The Universe"; sourceTree = BUILT_PRODUCTS_DIR; };
 		34754F9B1D96C4DC00F8793E /* main.cpp */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; tabWidth = 2; };
 		34754FA21D96C5CC00F8793E /* input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = input.txt; path = "A:Save The Universe/input.txt"; sourceTree = "<group>"; };
+		34E890E71D9778FD0014F24D /* ouput.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ouput.txt; sourceTree = "<group>"; };
+		34E890E91D977A730014F24D /* A-small-practice.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "A-small-practice.in"; path = "A:Save The Universe/A-small-practice.in"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +47,7 @@
 				34754F9A1D96C4DC00F8793E /* A:Save The Universe */,
 				34754F991D96C4DC00F8793E /* Products */,
 				34754FA21D96C5CC00F8793E /* input.txt */,
+				34E890E91D977A730014F24D /* A-small-practice.in */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				34754F9B1D96C4DC00F8793E /* main.cpp */,
+				34E890E71D9778FD0014F24D /* ouput.txt */,
 			);
 			path = "A:Save The Universe";
 			sourceTree = "<group>";

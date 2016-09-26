@@ -18,65 +18,75 @@ public:
   vector<string> engines, queries;
 };
 
-class Match {
-public:
-  int index;
-  int matches;
-};
-
-vector<vector<int> > findMatches(vector<Case>);
 vector<Case> parse(vector<string> arr);
-string solve(vector<vector<int> > totalMatches, vector<Case> cases);
 int pickEngine(vector<int>, int, vector<string>, string);
-
+string solve(vector<Case> cases);
+long pickNearest(Case, int);
 
 int main() {
   //cout << readFile("Input.txt").split("\n"));
-  vector<string> arr = split(readFile("A-small-practice.in"), "\n");
+  vector<string> arr = split(readFile("A-large-practice.in"), "\n");
   vector<Case> runs = parse(arr);
   //string output = solve(runs);
-  vector<vector <int> > totalMatches = findMatches(runs);
-  writeFile(solve(totalMatches, runs));
+  //vector<vector <int> > totalMatches = findMatches(runs);
+  writeFile(solve(runs));
 
   return 0;
 }
-
-//Solve the problem and return a string with output
-string solve(vector<vector<int> > totalMatches, vector<Case> cases){
-
+string solve(vector<Case> cases){
+  
   string answer = "";
+  
   for(int i = 0; i < cases.size(); i++){
     
     int switches = 0;
+    
     if(cases[i].queries.size() > 0){
-    int engineIndex = pickEngine(totalMatches[i], int(totalMatches[i].size()), cases[i].engines, cases[i].queries[0]);
-    
-    string output = "";
-    
+    long index = pickNearest(cases[i], 0);
     for(int q = 0; q < cases[i].queries.size(); q++){
-      if(cases[i].queries[q] == cases[i].engines[engineIndex]){
-        totalMatches[i][engineIndex]--;
+      
+      
+      
+      if(cases[i].engines[index] == cases[i].queries[q]){
         switches++;
-        engineIndex = pickEngine(totalMatches[i], engineIndex, cases[i].engines, cases[i].queries[q]);
-        
-      }else{
-        for( int z = 0; z < cases[i].engines.size(); z++){
-          if(cases[i].engines[z] == cases[i].queries[q]){
-            totalMatches[i][z]--;
-          }
-        }
+        index = pickNearest(cases[i], q);
       }
+      
+      
+      
     }
     }
-    
     
     
     answer += "Case #"+to_string(i+1)+": "+to_string(switches)+"\n";
   }
-
-
+  
+  
   return answer;
 }
+
+long pickNearest(Case run, int q){
+  
+  long nearest = 0;
+  long pickIndex = 0;
+  
+  for(int e = 0; e < run.engines.size(); e++){
+    long spot = run.queries.size();
+    for(long n = q; n < run.queries.size(); n++){
+      if(run.engines[e] == run.queries[n]){
+        spot = n;
+        n = run.queries.size();
+      }
+    }
+    if(spot > nearest){
+      nearest = spot;
+      pickIndex = e;
+    }
+  }
+  
+  return pickIndex;
+}
+
 
 void writeFile(string output){
   
@@ -103,44 +113,6 @@ int pickEngine(vector<int> matches, int last, vector<string> engines, string que
 }
 
 
-//Find the number of matches per engine.
-vector<vector<int> > findMatches(vector<Case> Cases){
-
-  vector<vector<int> > allMatches;
-
-  for(int i = 0; i < Cases.size(); i++){
-
-    Case set = Cases[i];
-    vector<int> matches;
-
-    for(int e = 0; e < set.engines.size(); e++){
-      int match = 0;
-      for(int q = 0; q < set.queries.size(); q++){
-        if(set.queries[q] == set.engines[e]){
-          match++;
-        }
-      }
-
-      matches.push_back(match);
-
-    }
-
-    allMatches.push_back(matches);
-    cout << "Match: "<< i << "[";
-
-    for(int m = 0; m < matches.size(); m++){
-      cout << matches[m] << ", ";
-    }
-
-    cout << "]\n";
-
-
-
-  }
-
-  return allMatches;
-
-}
 
 
 

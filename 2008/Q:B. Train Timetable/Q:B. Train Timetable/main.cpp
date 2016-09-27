@@ -31,7 +31,7 @@ void writeFile(string);
 // ###### MAIN  ##########
 int main(int argc, const char * argv[]) {
     
-    vector<Case> cases = parse(readFileByLine("input.txt"));
+    vector<Case> cases = parse(readFileByLine("B-small-practice.in"));
     writeFile(solve(cases));
     return 0;
 }
@@ -56,16 +56,35 @@ string solve(vector<Case> cases){
             
             //Find the number of A starts
             int temp = naStart = int(cases[c].na.departure.size());
+            vector<int> used;
             
             for(int i = 0; i < temp; i++){
+                
+                int smallestTime = 2500;
+                int smallest = -1;
                 for(int x = 0; x < cases[c].nb.arrival.size(); x++){
                     
-                    int depature = cases[c].na.departure[i];
-                    int arrival = cases[c].nb.arrival[x]+cases[c].turnaround;
-                    if(depature > arrival ){
-                        naStart--;
+                    bool alreadyUsed = false;
+                    for(int z = 0; z < used.size(); z++){
+                        if( used[z] == x){
+                            alreadyUsed = true;
+                        }
                     }
                     
+                    int departure = cases[c].na.departure[i];
+                    int arrival = cases[c].nb.arrival[x]+cases[c].turnaround;
+                    if(departure >= arrival  && !alreadyUsed){
+                        if(departure - arrival < smallestTime){
+                            smallestTime = departure - arrival;
+                            smallest = x;
+                        }
+                    }
+                    
+                }
+                
+                if(smallest > -1){
+                    used.push_back(smallest);
+                    nbStart--;
                 }
                 
             }
@@ -73,16 +92,38 @@ string solve(vector<Case> cases){
             
             //Find the number of B starts
             temp = nbStart = int(cases[c].nb.departure.size());
-            
+            used = {};
             for(int i = 0; i < temp; i++){
+                
+                int smallestTime = 2500;
+                int smallest = -1;
                 for(int x = 0; x < cases[c].na.arrival.size(); x++){
                     
-                    int depature = cases[c].nb.departure[i];
-                    int arrival = cases[c].na.arrival[x]+cases[c].turnaround;
-                    if(depature > arrival ){
-                        nbStart--;
+                    bool alreadyUsed = false;
+                    
+                    for(int z = 0; z < used.size(); z++){
+                        if( used[z] == x){
+                            alreadyUsed = true;
+                        }
                     }
                     
+                    int departure = cases[c].nb.departure[i];
+                    int arrival = cases[c].na.arrival[x]+cases[c].turnaround;
+                    
+                    
+                    if(departure >= arrival && !alreadyUsed){
+                        if(departure - arrival < smallestTime){
+                            smallestTime = departure - arrival;
+                            smallest = x;
+                        }
+                    }
+                    
+                    
+                }
+                
+                if(smallest > -1){
+                    used.push_back(smallest);
+                    nbStart--;
                 }
                 
             }

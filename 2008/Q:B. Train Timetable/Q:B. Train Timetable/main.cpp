@@ -28,6 +28,7 @@ public:
 vector<string> readFileByLine(string);
 vector<Case> parse(vector<string>);
 vector<string> split(string, string);
+string solve(vector<Case>);
 
 // ###### MAIN  ##########
 int main(int argc, const char * argv[]) {
@@ -36,6 +37,21 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
+// ###### Solve ##########
+
+string solve(vector<Case> cases){
+    
+    string answer = "";
+    
+    for(int c = 0; c < cases.size(); c++){
+        
+        
+        
+    }
+    
+    
+    return answer;
+}
 
 //####### Parse the lines in to cases ######
 vector<Case> parse(vector<string> lines){

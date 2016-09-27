@@ -10,9 +10,6 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include <sstream>
-#include <algorithm>
-#include <iterator>
 
 using namespace std;
 class TrainTimes {
@@ -33,7 +30,8 @@ string solve(vector<Case>);
 // ###### MAIN  ##########
 int main(int argc, const char * argv[]) {
     
-    parse(readFileByLine("input.txt"));
+    vector<Case> cases = parse(readFileByLine("input.txt"));
+    solve(cases);
     return 0;
 }
 
@@ -45,11 +43,59 @@ string solve(vector<Case> cases){
     
     for(int c = 0; c < cases.size(); c++){
         
+        int naStart = 0;
+        int nbStart = 0;
+        
+        //Help with out easy answers. This will just filter out all the wild cards for our sake.
+        if(cases[c].na.departure.size() == 0 && cases[c].nb.departure.size() != 0){
+            nbStart = int(cases[c].nb.departure.size());
+        }else if(cases[c].nb.departure.size() == 0 && cases[c].na.departure.size() != 0){
+            naStart = int(cases[c].na.departure.size());
+        }else if(cases[c].na.departure.size() != 0 && cases[c].nb.departure.size() != 0){
+            
+            //Find the number of A starts
+            int temp = naStart = int(cases[c].na.departure.size());
+            
+            for(int i = 0; i < temp; i++){
+                for(int x = 0; x < cases[c].nb.arrival.size(); x++){
+                    
+                    int depature = cases[c].na.departure[i];
+                    int arrival = cases[c].nb.arrival[x]+cases[c].turnaround;
+                    if(depature > arrival ){
+                        naStart--;
+                    }
+                    
+                }
+                
+            }
+            
+            
+            //Find the number of B starts
+            temp = nbStart = int(cases[c].nb.departure.size());
+            
+            for(int i = 0; i < temp; i++){
+                for(int x = 0; x < cases[c].na.arrival.size(); x++){
+                    
+                    int depature = cases[c].nb.departure[i];
+                    int arrival = cases[c].na.arrival[x]+cases[c].turnaround;
+                    if(depature > arrival ){
+                        nbStart--;
+                    }
+                    
+                }
+                
+            }
+            
+            
+            
+            
+        }
         
         
+        answer += "Case #"+to_string(c+1)+": "+to_string(naStart)+" "+to_string(nbStart)+"\n";
     }
     
-    
+    cout << answer << endl;
     return answer;
 }
 

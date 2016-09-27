@@ -15,11 +15,14 @@
 #include <iterator>
 
 using namespace std;
-
+class TrainTimes {
+public:
+    vector<int> departure, arrival;
+};
 class Case {
 public:
     int turnaround, starta, startb;
-    vector<string> na, nb;
+    TrainTimes na, nb;
 };
 
 vector<string> readFileByLine(string);
@@ -61,10 +64,17 @@ vector<Case> parse(vector<string> lines){
         curr = index;
         for(int i = curr; i < curr+total; i++){
             
+            int it;
+            it = 2;
+            
             if(i < curr+naNum){
-                cases[c].na.push_back(lines[i]);
+                vector<string> temp = split(lines[i], " ");
+                cases[c].na.departure.push_back(atoi(temp[0].erase(it,1).c_str()));
+                cases[c].na.arrival.push_back(atoi(temp[1].erase(it,1).c_str()));
             }else{
-                cases[c].nb.push_back(lines[i]);
+                vector<string> temp = split(lines[i], " ");
+                cases[c].nb.departure.push_back(atoi(temp[0].erase(it,1).c_str()));
+                cases[c].nb.arrival.push_back(atoi(temp[1].erase(it,1).c_str()));
             }
 
             index = i;

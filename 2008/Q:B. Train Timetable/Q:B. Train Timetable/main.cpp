@@ -26,12 +26,13 @@ vector<string> readFileByLine(string);
 vector<Case> parse(vector<string>);
 vector<string> split(string, string);
 string solve(vector<Case>);
+void writeFile(string);
 
 // ###### MAIN  ##########
 int main(int argc, const char * argv[]) {
     
     vector<Case> cases = parse(readFileByLine("input.txt"));
-    solve(cases);
+    writeFile(solve(cases));
     return 0;
 }
 
@@ -162,6 +163,16 @@ vector<string> readFileByLine(string name){
         lines.push_back(line);
     }
     return lines;
+}
+
+// ########## Write to file ####
+void writeFile(string output){
+    
+    ofstream myfile;
+    myfile.open("ouput.txt");
+    myfile << output;
+    myfile.close();
+    
 }
 
 // Splits a string by a delimeter

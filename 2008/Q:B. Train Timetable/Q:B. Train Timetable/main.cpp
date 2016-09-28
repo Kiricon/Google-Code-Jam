@@ -27,6 +27,7 @@ vector<Case> parse(vector<string>);
 vector<string> split(string, string);
 string solve(vector<Case>);
 void writeFile(string);
+int format(string str);
 
 // ###### MAIN  ##########
 int main(int argc, const char * argv[]) {
@@ -173,12 +174,12 @@ vector<Case> parse(vector<string> lines){
             
             if(i < curr+naNum){
                 vector<string> temp = split(lines[i], " ");
-                cases[c].na.departure.push_back(atoi(temp[0].erase(it,1).c_str()));
-                cases[c].na.arrival.push_back(atoi(temp[1].erase(it,1).c_str()));
+                cases[c].na.departure.push_back(format(temp[0]));
+                cases[c].na.arrival.push_back(format(temp[1]));
             }else{
                 vector<string> temp = split(lines[i], " ");
-                cases[c].nb.departure.push_back(atoi(temp[0].erase(it,1).c_str()));
-                cases[c].nb.arrival.push_back(atoi(temp[1].erase(it,1).c_str()));
+                cases[c].nb.departure.push_back(format(temp[0]));
+                cases[c].nb.arrival.push_back(format(temp[1]));
             }
 
             index = i;
@@ -227,4 +228,19 @@ vector<string> split(string str, string sep){
         current=strtok(NULL, sep.c_str());
     }
     return arr;
+}
+
+// remove :
+int format(string str){
+    string sep = ":";
+    char* cstr=const_cast<char*>(str.c_str());
+    char* current;
+    vector<string> arr;
+    current=strtok(cstr,sep.c_str());
+    while(current != NULL){
+        arr.push_back(current);
+        current=strtok(NULL, sep.c_str());
+    }
+    string temp = arr[0]+arr[1];
+    return atoi(temp.c_str());
 }

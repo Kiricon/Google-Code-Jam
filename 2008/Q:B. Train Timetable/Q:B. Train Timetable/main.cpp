@@ -32,7 +32,7 @@ int format(string str);
 // ###### MAIN  ##########
 int main(int argc, const char * argv[]) {
     
-    vector<Case> cases = parse(readFileByLine("B-small-practice.in"));
+    vector<Case> cases = parse(readFileByLine("B-large-practice.in"));
     writeFile(solve(cases));
     return 0;
 }
@@ -73,7 +73,19 @@ string solve(vector<Case> cases){
                     }
                     
                     int departure = cases[c].na.departure[i];
-                    int arrival = cases[c].nb.arrival[x]+cases[c].turnaround;
+                    int min, hr;
+                    min = cases[c].nb.arrival[x] % 100;
+                    hr = cases[c].nb.arrival[x] /100;
+                    
+                    min += cases[c].turnaround;
+                    if(min > 60){
+                        min -= 60;
+                        hr++;
+                    }
+                    if(hr > 23){
+                        hr -= 24;
+                    }
+                    int arrival = (hr *100)+min;
                     if(departure >= arrival  && !alreadyUsed){
                         if(departure - arrival < smallestTime){
                             smallestTime = departure - arrival;
@@ -85,7 +97,7 @@ string solve(vector<Case> cases){
                 
                 if(smallest > -1){
                     used.push_back(smallest);
-                    nbStart--;
+                    naStart--;
                 }
                 
             }
